@@ -1,0 +1,279 @@
+<html>
+<head>
+<style>
+a:hover {
+  color: #000116;
+}
+.scroll{
+Width: 10px;
+Height: 5 px;
+Overflow-y: scroll;
+}
+.body {
+padding: 15px;
+width: 60%;
+background-color: white;
+color: #707070;
+margin: auto;
+}
+.alignment-left{
+text-align: left;
+}
+.header {
+  text-align: left;
+color: 800080;
+  font-size: 20px;
+margin: 0px;
+position: fixed;
+padding: 0px 20px 0px 20px;
+top: 0;
+left: 0;
+width: 100%;
+background-color: F9F5EF;
+}
+.headera {
+float: none;
+position: fixed;
+top: 5;
+right: 20;
+padding: 0px 5px 0px 5px;
+}
+.footer {
+  color: 5C5C5C;
+  font-size: 12px;
+position: fixed;
+bottom: 0;
+left: 670;
+width: 100%;
+text-align: right;
+right:10px;
+}
+.dropbtn {
+  background-color: F9F5EF;
+  color: #800080;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.like{
+padding: 10px 60px 20px 60px;
+}
+
+.dropdown-content a:hover {background-color: #D1EAF0;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.slide { padding-top: 6ex; display: none; }
+.slide.current { display: block; }
+.question {
+    display: flex;
+    justify-content: space-between;
+}
+.button {
+  border: none;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 35px;
+  font-family: "Times New Roman", Times, serif;
+}
+</style>
+
+<title>Quizdom - English Literature Quiz</title>
+<link rel="icon" href= "quill-logo.png" type="image/icon">
+</head>
+</head>
+
+<body bgcolor = D1EAF0>
+<div class = header>
+		<div class="dropdown">
+  			<button class="dropbtn"><font size = 4px>&#8801 </font size><a href="../index.html"><font color =#800080><i>Quizdom</font color></i></a></button>
+ 			<div class="dropdown-content">
+    				<a href="../science/science.html"><font size=3px>Science</font size></a>
+   				<a href="../math/math.html"><font size=3px>Math</font size></a>
+  				<a href="../english/english.html"><font size=3px>English<font size></a>
+  			</div>
+			</div>
+
+<div class = headera>
+<svg width="150" height="46">
+  <rect id="rounded-rectangle" x="38" y="10" height="23" width="76"
+stroke="#800080" rx="5" stroke-width="2" fill="#D1EAF0" />
+<a xlink:href="mailto:kinara.goyal@gmail.com" target="_blank">
+  <text x="43" y="28" fill="#800080" font-size="20px">Contact</text>
+</a>
+</svg>
+</div>
+</div>
+
+<script>
+    function tick(slide, time_left) {
+        if (time_left > 0) {
+            time_left -= 1;
+            var timer = slide.querySelector('.timer');
+            timer.textContent = time_left + ' seconds left';
+            setTimeout(tick.bind(null, slide, time_left), 1000);
+        } else {
+            end_slide(slide, false, true);
+        }
+    }
+
+    function show_slide() {
+        var current_slide = document.querySelector('.slide.current');
+        current_slide.classList.remove('current');
+        var next_slide = current_slide.nextElementSibling;
+        next_slide.querySelectorAll('input').forEach(function(r) {
+                r.checked = false;
+        });
+        next_slide.classList.add('current')
+        tick(next_slide, 61);
+    }
+
+    function start_quiz() {
+        window.score = 0;
+        show_slide();
+    }
+
+    function end_slide(slide, correct, timed_out) {
+        var div = slide.querySelector(".wrong");
+        var text = 'You are correct. Well done!';
+        var color = 'red';
+        slide.querySelector('.timer').style.display = 'none';
+        if (timed_out) {
+            text = 'Oops, you are out of time!';
+        } else if (correct) {
+            window.score += 1;
+            color = 'green';
+        } else {
+            var radio = slide.querySelector('input[value=correct]');
+            text = 'You are wrong, the correct answer is: ' + radio.parentNode.textContent;
+        }
+        slide.querySelectorAll('input').forEach(function (r) {
+            r.disabled = true;
+        });
+        slide.querySelector('.answer').style.display = 'block';
+        slide.querySelector('.answer > div').textContent = text;
+        slide.querySelector('.answer > div').style.color = color;
+    }
+
+    function answered(radio) {
+	let outputColor = "color:green; font-size:20px;"
+        var slide = radio.closest(".slide");
+        end_slide(slide, radio.value === "correct", false);
+    }
+</script>
+
+<div class = body>
+    <div class="slide current">
+        <center><img src="story-cover.jpg" alt="Oops! There was an error. Reload to try again."</center>
+        <h1><center>English Literature Quiz</center></h1>
+        <div class= alignment-left>
+            <hr color = #800080 width=60%>
+            <p><FONT COLOR="#707070"><font size = "6px">This is a quiz designed for
+                    middle-school exam revision. It is fun and interactive. You can play with
+                    your friends. There is also a score-keeping mechanism, so you know who
+                    won.</font size></FONT COLOR></p>
+            <center><button onclick="start_quiz()" class="button">Start</button></center>
+
+        </div>
+    </div>
+
+    <div class="slide">
+        <font size = "12 px"><p>From whom does Napoleon buy neighboring farmland?</p>
+        <div class="question">
+        <ol style="list-style: none">
+            <li><label><input type="radio" name="question1" value="wrong" onchange="answered(this)" style="height:35px; width:35px";>Mr. Frederick</input></label></li>
+            <li><label><input type="radio" name="question1" value="wrong" onchange="answered(this)" style="height:35px; width:35px";>Mr. Jones</input></label></li>
+            <li><label><input type="radio" name="question1" value="correct" onchange="answered(this)" style="height:35px; width:35px";>Mr. Pilkington</input></label></li>
+            <li><label><input type="radio" name="question1" value="wrong" onchange="answered(this)" style="height:35px; width:35px";>Mr. Whymper</input></label></li>
+        </ol>
+        <div class="timer"></div>
+        </div>
+        <div class="answer" style="display:none">
+            <div></div>
+            <center><button onclick="show_slide()" class="button">Next</button></center>
+        </div>
+    </font size></div>
+
+    <div class="slide">
+        <font size = "12 px"><p>After which Russian leader is Napoleon modeled?</p>
+        <div class="question">
+        <ol style="list-style: none">
+            <li><label><input type="radio" name="question2" value="wrong" onchange="answered(this)" style="height:35px; width:35px";>Lenin</input></label></li>
+            <li><label><input type="radio" name="question2" value="correct" onchange="answered(this)" style="height:35px; width:35px";>Stalin</input></label></li>
+            <li><label><input type="radio" name="question2" value="wrong" onchange="answered(this)" style="height:35px; width:35px";>Trotsky</input></label></li>
+            <li><label><input type="radio" name="question2" value="wrong" onchange="answered(this)" style="height:35px; width:35px";>Tsar Nicolas II</input></label></li>
+        </ol>
+        <div class="timer"></div>
+
+        </div>
+        <div class="answer" style="display:none">
+            <div></div>
+            <center><button onclick="show_slide()" class="button">Next</button></center>
+        </div>
+    </font size></div>
+
+    <div class="slide">
+        <font size = "12 px"><p>After which Russian leader is Mr. Jones modeled?</p>
+        <div class="question">
+        <ol style="list-style: none">
+            <li><label><input type="radio" name="question3" value="wrong" onchange="answered(this)"style="height:35px; width:35px";>Lenin</input></label></li>
+            <li><label><input type="radio" name="question3" value="wrong" onchange="answered(this)"style="height:35px; width:35px";>Stalin</input></label></li>
+            <li><label><input type="radio" name="question3" value="wrong" onchange="answered(this)"style="height:35px; width:35px";>Trotsky</input></label></li>
+            <li><label><input type="radio" name="question3" value="correct" onchange="answered(this)"style="height:35px; width:35px";>Tsar Nicolas II</input></label></li>
+        </ol>
+        <div class="timer"></div>
+        </div>
+        <div class="answer" style="display:none">
+            <div></div>
+            <div style="text-align: center"><font size = 12>The End!</font size></div>
+        </div>
+    </font size></div>
+
+</div>
+</div>
+
+<div class = footer>
+<p><center> &#169 Copyright by Kinara Goyal</center></p>
+</div>
+</body>
+</html>
+
+<!--
+:
+After which Russian leader is Napoleon modeled?
+
+   - Lenin
+   - Stalin
+   - Trotsky
+   - Tsar Nicholas II
+
+After which Russian leader is Mr. Jones modeled?
+
+   - Lenin
+   - Stalin
+   - Trotsky
+   - Tsar Nicholas II (correct)
+-->
